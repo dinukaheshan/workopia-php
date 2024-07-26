@@ -12,7 +12,7 @@ class Router {
     }
 
     /**
-     * Add a POST route
+     * Add a GET route
      * @param string $uri
      * @param string $controller
      * @return void
@@ -52,11 +52,10 @@ class Router {
     }
 
     /**
-     * Load error page
+     * Load Error page
      * @param int $httpCode
      * @return void
      */
-
     public function error($httpCode = 404) {
         http_response_code($httpCode);
         loadView("error/{$httpCode}");
