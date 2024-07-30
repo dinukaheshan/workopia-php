@@ -1,0 +1,16 @@
+{
+    "name": "dinukaheshan/workopia-php",
+    "description": "Job Listing Application",
+    "authors": [
+        {
+            "name": "Dinuka Heshan",
+            "email": "dinuka@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "Framework/",
+            "App\\": "App/"
+        }
+    }
+}
