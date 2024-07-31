@@ -2,6 +2,8 @@
 
 namespace Framework;
 
+use App\Controllers\ErrorController;
+
 class Router {
     protected $routes = [];
 
@@ -14,7 +16,7 @@ class Router {
      */
     public function registerRoute($method, $uri, $action) {
 
-        list($controller,$controllerMethod) = explode('@', $action);
+        list($controller, $controllerMethod) = explode('@', $action);
 
         $this->routes[] = [
             'method' => $method,
@@ -65,17 +67,6 @@ class Router {
     }
 
     /**
-     * Load Error page
-     * @param int $httpCode
-     * @return void
-     */
-    public function error($httpCode = 404) {
-        http_response_code($httpCode);
-        loadView("error/{$httpCode}");
-        exit();
-    }
-
-    /**
      * Route the request
      * @param string $uri
      * @param string #method
@@ -90,11 +81,10 @@ class Router {
 
                 //Instantiate the controller and call the method
                 $controllerInstance = new $controller();
-                $controllerInstance -> $controllerMethod();
+                $controllerInstance->$controllerMethod();
                 return;
-
             }
         }
-        $this->error();
+        ErrorController::notFound();
     }
 }
