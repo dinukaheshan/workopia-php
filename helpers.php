@@ -14,7 +14,6 @@ function basePath($path = '') {
  * @param string $name
  * @return void    
  */
-
 function loadView($name, $data = []) {
     $viewPath = basePath("App/views/{$name}.view.php");
     if (file_exists($viewPath)) {
@@ -39,7 +38,6 @@ function loadPartial($name) {
     }
 }
 
-
 /**
  * Inspect a value(s)
  * @param mixed $value
@@ -61,7 +59,6 @@ function inspectAndDie($value) {
     die(var_dump($value));
     echo '</pre>';
 }
-
 
 /**
  * Format salary

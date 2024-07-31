@@ -18,8 +18,11 @@ class Database {
         $dsn = "mysql:host={$config['host']}; port={$config['port']};
         dbname={$config['dbname']}";
 
+        // Options array to set PDO attributes
         $options = [
+            // Set the error reporting mode to exception
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            // Set the default fetch mode to fetch objects
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
         ];
 
