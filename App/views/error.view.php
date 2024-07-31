@@ -9,6 +9,7 @@
         <p class="text-center text-2xl mb-4">
             <?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?>
         </p>
+        <a class="block text-center" href="/listings">Go Back To Listings</a>
     </div>
 </section>
 
