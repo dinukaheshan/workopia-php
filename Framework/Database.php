@@ -1,5 +1,11 @@
 <?php
 
+namespace Framework;
+
+use PDO;
+use PDOException;
+use Exception;
+
 class Database {
 
     public $conn;
@@ -9,7 +15,7 @@ class Database {
      * @param array $config
      */
     public function __construct($config) {
-        $dsn = "mysql:host={$config['host']};port={$config['port']};
+        $dsn = "mysql:host={$config['host']}; port={$config['port']};
         dbname={$config['dbname']}";
 
         $options = [
@@ -34,7 +40,7 @@ class Database {
         try {
             $sth = $this->conn->prepare($query);
             // Bind named params
-            foreach($params as $param => $value) {
+            foreach ($params as $param => $value) {
                 $sth->bindValue(":" . $param, $value);
             }
             $sth->execute();
