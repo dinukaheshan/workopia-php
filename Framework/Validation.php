@@ -19,4 +19,16 @@ class Validation {
         }
         return false;
     }
+
+    /**
+     * Validate email address
+     * @param String $value
+     * @return mixed
+     */
+    public static function email($value) {
+        $value = trim($value);
+        return filter_var($value, FILTER_VALIDATE_EMAIL);
+    }
+
+    
 }
