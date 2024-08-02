@@ -21,7 +21,7 @@ class ListingController {
      */
     public function index() {
 
-        inspectAndDie(Validation::email('test@test.com'));
+        inspectAndDie(Validation::match('password', 'password'));
         $listings = $this->db->query("SELECT * FROM listings")->fetchAll();
 
         loadView('listings/index', [
