@@ -14,21 +14,17 @@ class ListingController {
         $this->db = new Database($config);
     }
 
-
     /**
      * Show all listings
      * @return void
      */
     public function index() {
-
-        inspectAndDie(Validation::match('password', 'password'));
         $listings = $this->db->query("SELECT * FROM listings")->fetchAll();
 
         loadView('listings/index', [
             'listings' => $listings
         ]);
     }
-
 
     /**
      * Show the create listing form
@@ -37,7 +33,6 @@ class ListingController {
     public function create() {
         loadView('listings/create');
     }
-
 
     /**
      * Show a single listing
@@ -61,5 +56,21 @@ class ListingController {
         loadView('listings/show', [
             'listing' => $listing
         ]);
+    }
+
+    /**
+     * Store data in database
+     * @return void
+     */
+    public function store() {
+        $allowedFields = [
+            'title', 'description', 'salary',
+            'tags', 'company', 'address', 'city', 'state',
+            'phone', 'email', 'requirements', 'benefits'
+        ];
+        $newListingData = array_intersect_key($_POST, array_flip($allowedFields));
+        $newListingData['user_id'] = 1;
+        $newListingData = array_map('sanitize', $newListingData);
+        inspectAndDie($newListingData);
     }
 }
