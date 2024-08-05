@@ -68,3 +68,13 @@ function inspectAndDie($value) {
 function formatSalary($salary) {
     return '$' . number_format(floatval($salary));
 }
+
+
+/**
+ * sanitize data
+ * @param string $dirty
+ * @return String 
+ */
+function sanitize($dirty) {
+    return filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
+}
