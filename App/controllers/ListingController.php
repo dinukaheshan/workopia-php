@@ -68,9 +68,31 @@ class ListingController {
             'tags', 'company', 'address', 'city', 'state',
             'phone', 'email', 'requirements', 'benefits'
         ];
+
         $newListingData = array_intersect_key($_POST, array_flip($allowedFields));
+
         $newListingData['user_id'] = 1;
+
         $newListingData = array_map('sanitize', $newListingData);
-        inspectAndDie($newListingData);
+
+        $requiredFields = ['title', 'description', 'email', 'city', 'state'];
+
+        $errors = [];
+
+        foreach ($requiredFields as $field) {
+            if (empty($newListingData[$field]) || !Validation::string($newListingData[$field])) {
+                $errors[$field] = ucfirst($field) . ' is required';
+            }
+        }
+
+        if (!empty($errors)) {
+            // Reload view with errors
+            loadView('listings/create', [
+                'errors' => $errors
+            ]);
+        } else {
+            //Submit data
+            echo 'Success';
+        }
     }
 }
