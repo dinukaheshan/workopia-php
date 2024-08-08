@@ -64,9 +64,18 @@ class ListingController {
      */
     public function store() {
         $allowedFields = [
-            'title', 'description', 'salary',
-            'tags', 'company', 'address', 'city', 'state',
-            'phone', 'email', 'requirements', 'benefits'
+            'title',
+            'description',
+            'salary',
+            'tags',
+            'company',
+            'address',
+            'city',
+            'state',
+            'phone',
+            'email',
+            'requirements',
+            'benefits'
         ];
 
         $newListingData = array_intersect_key($_POST, array_flip($allowedFields));
@@ -78,7 +87,7 @@ class ListingController {
         foreach ($requiredFields as $field) {
             if (empty($newListingData[$field]) || !Validation::string($newListingData[$field])) {
                 $errors[$field] = ucfirst($field) . ' is required';
-            }  
+            }
         }
 
         if (!empty($errors)) {
@@ -89,7 +98,11 @@ class ListingController {
             ]);
         } else {
             //Submit data
-            echo 'Success';
+            $this->db->query('INSERT INTO listings (title, description, salary,
+            tags,company,address,city,state,phone,email,
+            requirements,benefits,user_id) VALUES (:title, :description, 
+            :salary,:company,:address,:city,:state,:phone,
+            :email,:requirements,:benefits,:user_id)', $newListingData);
         }
     }
 }
