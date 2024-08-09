@@ -124,8 +124,6 @@ class ListingController {
             $this->db->query($query, $newListingData);
 
             redirect('/listings');
-
-            inspectAndDie($values);
         }
     }
 
@@ -153,5 +151,31 @@ class ListingController {
         $_SESSION['success_message'] = 'Listing Deleted Successfully';
 
         redirect('/listings');
+    }
+
+
+    /**
+     * Show the listing edit form
+     * @param array $params
+     * @return void
+     */
+    public function edit($params) {
+        $id = $params['id'] ?? '';
+
+        $params = [
+            'id' => $id
+        ];
+
+        $listing = $this->db->query('SELECT * FROM listings WHERE id = :id', $params)->fetch();
+
+        // Check if listing exists
+        if (!$listing) {
+            ErrorController::notFound('Listing Not Found!');
+            return;
+        }
+
+        loadView('listings/edit', [
+            'listing' => $listing
+        ]);
     }
 }
