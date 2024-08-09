@@ -98,11 +98,33 @@ class ListingController {
             ]);
         } else {
             //Submit data
-            $this->db->query('INSERT INTO listings (title, description, salary,
-            tags,company,address,city,state,phone,email,
-            requirements,benefits,user_id) VALUES (:title, :description, 
-            :salary,:company,:address,:city,:state,:phone,
-            :email,:requirements,:benefits,:user_id)', $newListingData);
+            $fields = [];
+
+            foreach ($newListingData as $field => $value) {
+                $fields[] = $field;
+            }
+
+            $fields = implode(', ', $fields);
+
+            $values = [];
+
+            foreach ($newListingData as $field => $value) {
+                // convert empty strings to null
+                if ($value == '') {
+                    $newListingData[$field] = null;
+                }
+                $values[] = ':' . $field;
+            }
+
+            $values = implode(', ', $values);
+
+            $query = "INSERT INTO listings ($fields) VALUES ($values)";
+
+            $this->db->query($query, $newListingData);
+
+            redirect('/listings');
+
+            inspectAndDie($values);
         }
     }
 }
