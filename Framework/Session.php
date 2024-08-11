@@ -43,5 +43,14 @@ class Session {
         return isset($_SESSION[$key]);
     }
 
-    
+    /**
+     * Clear session by key
+     * @param string $key
+     * @return void
+     */
+    public static function clear($key) {
+        if (isset($_SESSION[$key])) {
+            unset($_SESSION[$key]);
+        }
+    }
 }
