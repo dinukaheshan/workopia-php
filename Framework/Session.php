@@ -33,4 +33,15 @@ class Session {
     public static function get($key, $default = null) {
         return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
     }
+
+    /**
+     * Check if session key exists
+     * @param string $key
+     * @return bool
+     */
+    public static function has($key) {
+        return isset($_SESSION[$key]);
+    }
+
+    
 }
