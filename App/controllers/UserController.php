@@ -66,6 +66,27 @@ class UserController {
             loadView('users/create', [
                 'errors' => $errors,
                 'user' => [
+                    'name' => $name,
+                    'email' => $email,
+                    'city' => $city,
+                    'state' => $state
+                ]
+            ]);
+            exit;
+        }
+
+        // Check if email exists
+        $params = [
+            'email' => $email
+        ];
+
+        $user = $this->db->query('SELECT * FROM users WHERE email = :email', $params)->fetch();
+
+        if ($user) {
+            $errors['email'] = 'Email already exists';
+            loadView('users/create', [
+                'errors' => $errors,
+                'user' => [
                     'password' => $name,
                     'email' => $email,
                     'city' => $city,
@@ -73,8 +94,6 @@ class UserController {
                 ]
             ]);
             exit;
-        } else {
-            inspectAndDie('Store');
         }
     }
 }
