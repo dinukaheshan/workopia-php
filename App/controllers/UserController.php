@@ -132,16 +132,43 @@ class UserController {
             $errors['email'] = 'Please enter a valid email address';
         }
 
-        if (!Validation::string($password)) {
+        if (!Validation::string($password, 6, 50)) {
             $errors['password'] = 'Please enter a valid password';
         }
 
+        // Check for errors
         if (!empty($errors)) {
             loadView('users/login', [
                 'errors' => $errors
             ]);
             exit;
         }
+
+        // Check for email
+        $params = [
+            'email' => $email
+        ];
+
+        // Check if email exists/is valid
+        $user = $this->db->query('SELECT * FROM users WHERE email = :email', $params)->fetch();
+
+        if (!$user) {
+            $errors['email'] = 'Incorrect credentials';
+            loadView('users/login', [
+                'errors' => $errors
+            ]);
+            exit;
+        }
+
+        // Check if password is correct
+        if (!password_verify($password, $user->password)) {
+            $errors['email'] = 'Incorrect credentials';
+            loadView('users/login', [
+                'errors' => $errors
+            ]);
+            exit;
+        }
+
     }
 
     /**
