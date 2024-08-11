@@ -118,6 +118,33 @@ class UserController {
     }
 
     /**
+     * Authenticate a user with email and password
+     * @return void
+     */
+    public function authentic() {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $errors = [];
+
+        // Validation
+        if (!Validation::email($email)) {
+            $errors['email'] = 'Please enter a valid email address';
+        }
+
+        if (!Validation::string($password)) {
+            $errors['password'] = 'Please enter a valid password';
+        }
+
+        if (!empty($errors)) {
+            loadView('users/login', [
+                'errors' => $errors
+            ]);
+            exit;
+        }
+    }
+
+    /**
      * Logout a user and kill session
      * @return void
      */
