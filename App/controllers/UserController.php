@@ -106,6 +106,7 @@ class UserController {
         // Get new user ID
         $userId = $this->db->conn->lastInsertId();
 
+        // Set user session       
         Session::set('user', [
             'id' => $userId,
             'name' => $name,
@@ -169,6 +170,16 @@ class UserController {
             exit;
         }
 
+        // Set user session       
+        Session::set('user', [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'city' => $user->city,
+            'state' => $user->state
+        ]);
+
+        redirect('/');
     }
 
     /**
