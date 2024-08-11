@@ -55,7 +55,7 @@
 
             <p class="mt-4 text-gray-500">
                 Already have an account?
-                <a class="text-blue-900" href="login.html">Login</a>
+                <a class="text-blue-900" href="/auth/login">Login</a>
             </p>
         </form>
     </div>
