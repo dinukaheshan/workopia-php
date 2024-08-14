@@ -209,6 +209,12 @@ class ListingController {
             return;
         }
 
+        // Authorization
+        if (!Authorization::isOwner($listing->user_id)) {
+            Session::setFlashMessage('error_message', 'You are not authorized to delete this listing');
+            return redirect('/listings/' . $listing->$id);
+        }
+        
         $allowedFields = [
             'title',
             'description',
