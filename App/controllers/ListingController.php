@@ -170,6 +170,7 @@ class ListingController {
      * @return void
      */
     public function edit($params) {
+
         $id = $params['id'] ?? '';
 
         $params = [
@@ -182,6 +183,12 @@ class ListingController {
         if (!$listing) {
             ErrorController::notFound('Listing Not Found!');
             return;
+        }
+
+        // Authorization
+        if (!Authorization::isOwner($listing->user_id)) {
+            Session::setFlashMessage('error_message', 'You are not authorized to delete this listing');
+            return redirect('/listings/' . $listing->$id);
         }
 
         loadView('listings/edit', [
@@ -214,7 +221,7 @@ class ListingController {
             Session::setFlashMessage('error_message', 'You are not authorized to delete this listing');
             return redirect('/listings/' . $listing->$id);
         }
-        
+
         $allowedFields = [
             'title',
             'description',
